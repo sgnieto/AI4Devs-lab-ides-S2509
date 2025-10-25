@@ -1,0 +1,67 @@
+Correcciones:
+- Versiones de tsconfig-paths, zod-openapi errónea.
+- Error de compilación del logger:
+```
+PS C:\wspc\ai4devs\AI4Devs-lab-ides-S2509\backend> npm run build
+
+> backend@1.0.0 build
+> tsc
+
+src/shared/kernel/logger.ts:9:3 - error TS2769: No overload matches this call.
+  Overload 1 of 2, '(opts?: Options<IncomingMessage, ServerResponse<IncomingMessage>, string> | undefined, stream?: DestinationStream | undefined): HttpLogger<...>', gave the following error.
+    Type 'Logger<never, boolean>' is not assignable to type 'Logger<string> | undefined'.
+      Type 'Logger<never, boolean>' is not assignable to type 'Logger<string>'.
+        Type 'Logger<never, boolean>' is not assignable to type 'LoggerExtras<string>'.
+          The types returned by 'child(...)' are incompatible between these types.
+            Type 'Logger<ChildCustomLevels, boolean>' is not assignable to type 'Logger<string | ChildCustomLevels>'.
+              Type 'Logger<ChildCustomLevels, boolean>' is not assignable to type 'LoggerExtras<string | ChildCustomLevels>'.
+                Types of property 'customLevels' are incompatible.
+                  Type '{ [level in ChildCustomLevels]: number; }' is not assignable to type '{ [level in string | ChildCustomLevels]: number; }'.      
+                    Type 'string | ChildCustomLevels' is not assignable to type 'ChildCustomLevels'.
+                      'string | ChildCustomLevels' is assignable to the constraint of type 'ChildCustomLevels', but 'ChildCustomLevels' could be instantiated with a different subtype of constraint 'string'.
+                        Type 'string' is not assignable to type 'ChildCustomLevels'.
+                          'string' is assignable to the constraint of type 'ChildCustomLevels', but 'ChildCustomLevels' could be instantiated with a different subtype of constraint 'string'.
+  Overload 2 of 2, '(stream?: DestinationStream | undefined): HttpLogger<IncomingMessage, ServerResponse<IncomingMessage>, never>', gave the following error.
+    Argument of type '{ logger: pino.Logger<never, boolean>; }' is not assignable to parameter of type 'DestinationStream'.
+      Object literal may only specify known properties, and 'logger' does not exist in type 'DestinationStream'.
+
+9   logger,
+    ~~~~~~
+
+
+
+Found 1 error in src/shared/kernel/logger.ts:9
+```
+Uso de fix en chat nativo de cursor. Incompatibilidad de versiones, solución: npm i pino-http@^10
+
+- No arranca el servidor, por error:
+```
+PS C:\wspc\ai4devs\AI4Devs-lab-ides-S2509\backend> npm run dev              
+
+> backend@1.0.0 dev
+> node -r ts-node/register -r tsconfig-paths/register -r reflect-metadata node_modules/ts-node-dev/bin/ts-node-dev --respawn --transpile-only src/index.ts
+
+Error: Cannot find module 'C:\wspc\ai4devs\AI4Devs-lab-ides-S2509\backend\node_modules\ts-node-dev\bin\ts-node-dev'
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+    at Function.Module._resolveFilename (C:\wspc\ai4devs\AI4Devs-lab-ides-S2509\backend\node_modules\tsconfig-paths\src\register.ts:115:36)
+    at Function.Module._load (node:internal/modules/cjs/loader:1051:27)     
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:174:12)
+    at node:internal/main/run_main_module:28:49
+```
+  - Soluciones: 
+    - Instalar correctamente dependencias: npm i -D ts-node-dev ts-node typescript tsconfig-paths @types/node reflect-metadata
+    - Continua el error, ejecuto para depurar npx ts-node-dev -r ts-node/register -r tsconfig-paths/register -r reflect-metadata --respawn --transpile-only src/index.ts (chatgpt) y aparece:
+      ```
+        [INFO] 16:22:49 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 4.9.5)
+        [ERROR] 16:22:51 Error: Debug Failure. False expression: Non-string value passed to `ts.resolveTypeReferenceDirective`, likely by a wrapping package working with an outdated `resolveTypeReferenceDirectives` signature. This is probably not a problem in TS itself.
+      ```
+      Acciones:
+        - npm i -D ts-node@^10.9.2 ts-node-dev@^1.1.8
+        - Modificación script: "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register -r reflect-metadata src/index.ts"
+- Error de ejecición en test derivado de que el servidor se queda abierto:
+  - Acciones:
+    - Añadir al script de jest el parametro --detectOpenHandles. Las pruebas estaban arrancando un servidor real. Se lo he pasado en un prompt a cursor para solucionarlo.
+- Error ejecutando generate-openapi:
+  - Acciones:
+    - npm i zod-to-openapi --legacy-peer-deps
+    

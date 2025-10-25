@@ -92,5 +92,25 @@ npm run build
 npm run lint
 npm run lint:fix
 npm run format
+
+# generar tipos desde OpenAPI del backend
+npm run types:openapi
+```
+
+## Tipos generados desde OpenAPI
+- Este proyecto incluye un script para generar tipos a partir de `backend/openapi.json`.
+- Ejecuta:
+
+```
+npm --prefix backend run generate:openapi && npm --prefix frontend run types:openapi
+```
+
+- Los tipos se generan en `src/types/openapi.ts`. Úsalos así:
+
+```ts
+import type { paths } from './types/openapi';
+
+type CreateUserBody =
+  paths['/users/']['post']['requestBody']['content']['application/json'];
 ```
 

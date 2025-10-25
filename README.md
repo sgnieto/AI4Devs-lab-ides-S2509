@@ -1,6 +1,6 @@
 # LTI - Sistema de Seguimiento de Talento
 
-Este proyecto es una aplicación full-stack con un frontend en React y un backend en Express usando Prisma como ORM. El frontend se inicia con Create React App y el backend está escrito en TypeScript.
+Monorepo full‑stack con frontend React y backend Express/TypeScript. El backend aplica DDD + Arquitectura Hexagonal + SOLID, con Prisma, Zod y DI con tsyringe.
 
 ## Explicación de Directorios y Archivos
 
@@ -27,9 +27,9 @@ El frontend es una aplicación React y sus archivos principales están ubicados 
 
 ### Backend
 
-El backend es una aplicación Express escrita en TypeScript.
-- El directorio `src` contiene el código fuente
-- El directorio `prisma` contiene el esquema de Prisma.
+Backend en Express + TypeScript con Prisma y arquitectura limpia. Documentación completa:
+
+`backend/README.md`
 
 ## Primeros Pasos
 
@@ -94,8 +94,7 @@ Para detener el contenedor Docker, ejecuta el siguiente comando:
 docker-compose down
 ```
 
-## Frontend
+## Documentación
 
-Consulta la guía completa del frontend (instalación, estructura, shadcn, Tailwind, pruebas, principios de arquitectura) en:
-
-`frontend/README.md`
+- Frontend: `frontend/README.md`
+- Backend: `backend/README.md`

@@ -31,7 +31,8 @@
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "eslint --ext .ts,.tsx src --fix",
     "format": "prettier --write .",
-    "shadcn": "shadcn"
+    "shadcn": "shadcn",
+    "types:openapi": "npm --prefix ../backend run generate:openapi && node ./scripts/generate-openapi-types.mjs"
   },
   "browserslist": {
     "production": [
@@ -60,6 +61,7 @@
     "prettier": "^3.6.2",
     "shadcn": "^3.5.0",
     "tailwindcss": "^4.1.16",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "openapi-typescript": "^7.4.2"
   }
 }
