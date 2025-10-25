@@ -1,46 +1,96 @@
-# Getting Started with Create React App
+# Frontend (React + TypeScript)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicación React 18 + TypeScript con Tailwind CSS, shadcn/ui y Heroicons. Incluye ESLint + Prettier para formato consistente y CRACO para integrar PostCSS/Tailwind en CRA.
 
-## Available Scripts
+## Estructura
 
-In the project directory, you can run:
+```
+frontend/
+  components.json                # Config del cliente shadcn (registries, estilo)
+  craco.config.js                # PostCSS/Tailwind vía CRACO
+  postcss.config.js
+  tailwind.config.js
+  package.json
+  src/
+    index.tsx
+    index.css                    # @tailwind base, components, utilities + tokens CSS
+    App.tsx
+    components/
+      ui/                        # Componentes UI (shadcn)
+        button.tsx
+    lib/
+      utils.ts                   # utilidades (cn)
+    tests/
+      App.test.tsx
+```
 
-### `npm start`
+## Tecnologías
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React 18 + TypeScript
+- Tailwind CSS + tailwindcss-animate
+- shadcn/ui (cliente `shadcn`, estilo `new-york`, base `slate`)
+- Heroicons (`@heroicons/react`) y Lucide (`lucide-react`)
+- ESLint + Prettier
+- CRA + CRACO
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Principios de arquitectura
 
-### `npm test`
+- SOLID en UI: componentes pequeños, props tipadas, lógica reutilizable en hooks.
+- Atomic Design: base en `src/components/ui` y composición progresiva.
+- Screaming Architecture (frontend): carpetas por feature/dominio cuando escale (`src/features/...`).
+- Simplicity First: evitar sobre-ingeniería, utilidades mínimas y claras.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Testing
 
-### `npm run build`
+- Unit: utilidades (`src/lib`), hooks y componentes puros.
+- Integración: interacciones con Testing Library.
+- Cobertura en flujos críticos y renders condicionales. Ejecutar: `cd frontend ; npm test`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Buenas prácticas TypeScript
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Tipar props/retornos; evitar `any`.
+- Preferir unions/enums frente a strings sueltas.
+- Centralizar helpers (`cn`) y evitar duplicaciones.
+- Evitar side-effects en render; usar hooks.
+- Nombres semánticos y consistentes.
+- Container Pattern: Separa la lógica de negocio de la presentación
+- Custom Hooks: Lógica de negocio en hooks
+- Pureza de componentes: Components reciben props, hooks manejan estado
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Cliente shadcn (registries y comandos)
 
-### `npm run eject`
+- Configuración en `components.json`:
+  - style: `new-york`
+  - tailwind.baseColor: `slate`
+  - registries: `@ss-components`, `@ss-themes`, `@ss-blocks`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Comandos (desde `frontend`):
+  - Listar themes (ejemplo solicitado):
+    ```bash
+    npm run shadcn list @ss-themes
+    ```
+  - Listar componentes/bloques:
+    ```bash
+    npm run shadcn list @ss-components
+    npm run shadcn list @ss-blocks
+    ```
+  - Añadir un componente (ejemplo):
+    ```bash
+    npm run shadcn -- add button --registry @ss-components
+    ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Scripts
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+# desarrollo
+npm run start
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# build producción
+npm run build
 
-## Learn More
+# lint/format
+npm run lint
+npm run lint:fix
+npm run format
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

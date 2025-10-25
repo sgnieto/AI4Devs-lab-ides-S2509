@@ -1,0 +1,5 @@
+Correcciones:
+- El prompt se ha dejado sin instalar dependencias y he tenido que decirle que lo haga de nuevo.
+- No las ha terminado de instalar correctamente, y he tenido que hacer el npm install. 
+- Ha cambiado la forma de compilar y arrancar para usar Craco. Esto no debería haberlo hecho, pero no lo voy a cambiar.
+- El cliente de shadcn no funciona y no da ningún error específico

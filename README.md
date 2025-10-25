@@ -93,3 +93,9 @@ Para detener el contenedor Docker, ejecuta el siguiente comando:
 ```
 docker-compose down
 ```
+
+## Frontend
+
+Consulta la guía completa del frontend (instalación, estructura, shadcn, Tailwind, pruebas, principios de arquitectura) en:
+
+`frontend/README.md`
