@@ -1,10 +1,14 @@
 import 'dotenv/config';
-import { cleanEnv, port, str } from 'envalid';
+import { cleanEnv, port, str, num } from 'envalid';
 
 export const env = cleanEnv(process.env, {
   NODE_ENV: str({ default: 'development' }),
   PORT: port({ default: 3010 }),
   DATABASE_URL: str({ desc: 'PostgreSQL connection string for Prisma' }),
+  JWT_SECRET: str({ desc: 'Secret for signing JWT (HS256)' }),
+  JWT_EXPIRES_MINUTES: num({ default: 15 }),
+  RATE_LIMIT_WINDOW_MS: num({ default: 60_000 }),
+  RATE_LIMIT_MAX: num({ default: 60 }),
 });
 
 

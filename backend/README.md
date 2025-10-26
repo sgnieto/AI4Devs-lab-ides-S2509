@@ -50,15 +50,17 @@ backend/
 ```
 
 ## Tecnologías utilizadas
-- Runtime/Framework: Node.js, Express.
-- Lenguaje: TypeScript.
-- ORM: Prisma.
-- Validación: envalid (config), Zod (DTOs/domain).
-- DI: tsyringe + reflect-metadata.
-- Logging: pino, pino-http.
-- Contratos/Docs: Swagger (swagger-jsdoc, swagger-ui-express); OpenAPI generado desde Zod.
-- Testing: Jest, Supertest, ts-jest.
-- DX: ts-node-dev, tsconfig-paths.
+- **Runtime/Framework**: Node.js, Express.
+- **Lenguaje**: TypeScript.
+- **ORM**: Prisma con singleton pattern para conexiones.
+- **Validación**: envalid (config), Zod (DTOs/domain).
+- **DI**: tsyringe + reflect-metadata.
+- **Logging**: pino, pino-http.
+- **Autenticación**: JWT con roles (recruiter, hiring_manager, hr_ops).
+- **Rate Limiting**: express-rate-limit con configuración personalizable.
+- **Contratos/Docs**: Swagger (swagger-jsdoc, swagger-ui-express); OpenAPI generado desde Zod.
+- **Testing**: Jest, Supertest, ts-jest con configuración optimizada.
+- **DX**: ts-node-dev, tsconfig-paths.
 
 ## Principios de arquitectura aplicados
 - Domain-Driven Design (DDD)
@@ -77,15 +79,24 @@ backend/
   - Esquemas Zod como fuente de verdad para validación y contratos.
 
 ## Estrategia de testing
-- Unitarios
+- **Unitarios**
   - Casos de uso en `application` con repositorios mock (puertos).
-- Integración
+- **Integración**
   - Adaptadores Prisma con DB efímera (Docker o contenedor).
-- End-to-End (E2E)
+- **End-to-End (E2E)**
   - Supertest contra el servidor Express.
-- Configuración Jest
+  - Tests de autenticación JWT y rate limiting.
+- **Configuración Jest**
   - `moduleNameMapper` para aliases (`@shared/*`, `@users/*`).
+  - `testPathIgnorePatterns` para excluir archivos helper.
   - Evita open handles: no llamar `app.listen` cuando `NODE_ENV === 'test'`.
+
+### Tests implementados
+- ✅ **Auth E2E**: Login, logout, credenciales inválidas
+- ✅ **Rate Limiting E2E**: Verificación de límites por endpoint
+- ✅ **Login UseCase**: Casos de uso de autenticación
+- ✅ **Candidates Protected**: Endpoints protegidos por roles
+- ✅ **App Integration**: Tests de integración general
 
 ## Buenas prácticas TypeScript en backend
 - Exporta APIs con tipos explícitos; evita `any` salvo en límites de infraestructura.
@@ -160,9 +171,24 @@ Swagger UI (si se expone): montar `swagger-ui-express` sirviendo `openapi.json` 
 
 Docker/PostgreSQL (opcional): usar `docker-compose.yml` en la raíz para levantar la DB.
 
-## Endpoints de ejemplo
+## Endpoints disponibles
+
+### Autenticación
+- `POST /auth/login` → Login con JWT (rate limited)
+- `POST /auth/logout` → Logout (rate limited)
+
+### Usuarios
+- `POST /users` → Crear usuario (usa caso de uso + repo Prisma)
+
+### Candidatos (Protegido)
+- `GET /candidates` → Listar candidatos (requiere autenticación)
+- `POST /candidates` → Crear candidato (requiere rol específico)
+
+### Health
 - `GET /` → Health básico: "Hola LTI!"
-- `POST /users` → Crea usuario (usa caso de uso + repo Prisma)
+
+### Documentación
+- `GET /api-docs` → Swagger UI con documentación OpenAPI
 
 ---
 

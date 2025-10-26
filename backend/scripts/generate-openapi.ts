@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { writeFileSync } from 'fs';
-import { z } from 'zod/v4';
+import { z } from 'zod';
 import { createSchema } from 'zod-openapi';
 import { createHttpServer } from '@shared/http/server';
 import { getRegisteredRouters } from '@shared/http/route-registry';

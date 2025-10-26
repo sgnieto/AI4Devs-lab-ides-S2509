@@ -26,12 +26,14 @@ frontend/
 
 ## Tecnologías
 
-- React 18 + TypeScript
-- Tailwind CSS + tailwindcss-animate
-- shadcn/ui (cliente `shadcn`, estilo `new-york`, base `slate`)
-- Heroicons (`@heroicons/react`) y Lucide (`lucide-react`)
-- ESLint + Prettier
-- CRA + CRACO
+- **React 18** + TypeScript
+- **Tailwind CSS** + tailwindcss-animate
+- **shadcn/ui** (cliente `shadcn`, estilo `new-york`, base `slate`)
+- **Heroicons** (`@heroicons/react`) y Lucide (`lucide-react`)
+- **ESLint + Prettier** para calidad de código
+- **CRA + CRACO** para configuración personalizada
+- **Autenticación JWT** con contexto React
+- **Tipos generados** desde OpenAPI del backend
 
 ## Principios de arquitectura
 
@@ -42,9 +44,17 @@ frontend/
 
 ## Testing
 
-- Unit: utilidades (`src/lib`), hooks y componentes puros.
-- Integración: interacciones con Testing Library.
-- Cobertura en flujos críticos y renders condicionales. Ejecutar: `cd frontend ; npm test`.
+- **Unit**: utilidades (`src/lib`), hooks y componentes puros.
+- **Integración**: interacciones con Testing Library.
+- **Autenticación**: tests de login, logout y protección de rutas.
+- **Cobertura**: flujos críticos y renders condicionales.
+
+Ejecutar: `cd frontend ; npm test`
+
+### Tests implementados
+- ✅ **App.test.tsx**: Tests de integración de la aplicación
+- ✅ **LoginForm.test.tsx**: Tests del formulario de login
+- ✅ **RequireRole.test.tsx**: Tests de protección por roles
 
 ## Buenas prácticas TypeScript
 
@@ -93,9 +103,22 @@ npm run lint
 npm run lint:fix
 npm run format
 
+# testing
+npm test
+
 # generar tipos desde OpenAPI del backend
 npm run types:openapi
 ```
+
+## Características implementadas
+
+- ✅ **Autenticación JWT** con contexto React
+- ✅ **Protección de rutas** por roles
+- ✅ **Componentes shadcn/ui** para UI consistente
+- ✅ **Layout responsivo** con sidebar
+- ✅ **Formularios** con validación
+- ✅ **Tipos TypeScript** generados desde OpenAPI
+- ✅ **Tests automatizados** con Jest y Testing Library
 
 ## Tipos generados desde OpenAPI
 - Este proyecto incluye un script para generar tipos a partir de `backend/openapi.json`.

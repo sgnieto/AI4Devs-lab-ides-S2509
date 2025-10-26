@@ -1,0 +1,18 @@
+[
+  {
+    "id": "cf3bf114-8a07-4a99-84be-fa2e38ddac92",
+    "email": "",
+    "name": "",
+    "role": "recruiter",
+    "password": "zlFE7;Q<6QBNB2v8",
+    "createdAt": "2025-10-25T21:16:52.534Z"
+  },
+  {
+    "id": "c25954ba-5533-40cc-aad6-88da2269cdb1",
+    "email": "sgnieto@gmail.com",
+    "name": "Santiago",
+    "role": "recruiter",
+    "password": "StrongPass1!",
+    "createdAt": "2025-10-25T21:44:12.107Z"
+  }
+]

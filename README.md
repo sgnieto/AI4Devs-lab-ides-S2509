@@ -2,6 +2,14 @@
 
 Monorepo full‑stack con frontend React y backend Express/TypeScript. El backend aplica DDD + Arquitectura Hexagonal + SOLID, con Prisma, Zod y DI con tsyringe.
 
+## 🚀 Estado del Proyecto
+
+✅ **Backend completamente funcional** con autenticación JWT, rate limiting y tests E2E  
+✅ **Frontend React** con componentes shadcn/ui y autenticación  
+✅ **Base de datos PostgreSQL** con Prisma ORM  
+✅ **Tests automatizados** con Jest y Supertest  
+✅ **Documentación OpenAPI** generada automáticamente
+
 ## Explicación de Directorios y Archivos
 
 - `backend/`: Contiene el código del lado del servidor escrito en Node.js.
@@ -31,42 +39,71 @@ Backend en Express + TypeScript con Prisma y arquitectura limpia. Documentación
 
 `backend/README.md`
 
-## Primeros Pasos
+## 🛠️ Instalación y Configuración
 
-Para comenzar con este proyecto, sigue estos pasos:
+### Prerrequisitos
+- Node.js LTS (v18 o superior)
+- Docker y Docker Compose
+- npm o yarn
 
-1. Clona el repositorio.
-2. Instala las dependencias para el frontend y el backend:
-```sh
+### Configuración rápida
+
+1. **Clona el repositorio**
+```bash
+git clone <repository-url>
+cd AI4Devs-lab-ides-S2509
+```
+
+2. **Configura la base de datos**
+```bash
+# Inicia PostgreSQL con Docker
+docker-compose up -d
+```
+
+3. **Configura el backend**
+```bash
+cd backend
+npm install
+cp .env.example .env  # Configura las variables de entorno
+npm run prisma:generate
+npm run prisma:migrate
+```
+
+4. **Configura el frontend**
+```bash
 cd frontend
 npm install
-
-cd ../backend
-npm install
-```
-3. Construye el servidor backend:
-```
-cd backend
-npm run build
-````
-4. Inicia el servidor backend:
-```
-cd backend
-npm run dev 
 ```
 
-5. En una nueva ventana de terminal, construye el servidor frontend:
+### 🚀 Desarrollo
+
+**Terminal 1 - Backend:**
+```bash
+cd backend
+npm run dev
 ```
-cd frontend
-npm run build
-```
-6. Inicia el servidor frontend:
-```
+
+**Terminal 2 - Frontend:**
+```bash
 cd frontend
 npm start
 ```
 
-El servidor backend estará corriendo en http://localhost:3010 y el frontend estará disponible en http://localhost:3000.
+- **Backend**: http://localhost:3010
+- **Frontend**: http://localhost:3000
+- **API Docs**: http://localhost:3010/api-docs (Swagger UI)
+
+### 🧪 Testing
+
+```bash
+# Backend tests
+cd backend
+npm test
+
+# Frontend tests  
+cd frontend
+npm test
+```
 
 ## Docker y PostgreSQL
 
@@ -94,7 +131,31 @@ Para detener el contenedor Docker, ejecuta el siguiente comando:
 docker-compose down
 ```
 
-## Documentación
+## 📚 Documentación
 
-- Frontend: `frontend/README.md`
-- Backend: `backend/README.md`
+- **Frontend**: `frontend/README.md` - React + TypeScript + shadcn/ui
+- **Backend**: `backend/README.md` - Express + DDD + Arquitectura Hexagonal
+- **API**: `backend/openapi.json` - Documentación OpenAPI generada automáticamente
+
+## 🔧 Características Principales
+
+### Backend
+- ✅ **Autenticación JWT** con roles (recruiter, hiring_manager, hr_ops)
+- ✅ **Rate Limiting** configurable por endpoint
+- ✅ **Arquitectura Hexagonal** con DDD y SOLID
+- ✅ **Tests E2E** con Jest y Supertest
+- ✅ **Logging estructurado** con Pino
+- ✅ **Validación** con Zod y envalid
+- ✅ **Inyección de dependencias** con tsyringe
+
+### Frontend  
+- ✅ **React 18** con TypeScript
+- ✅ **shadcn/ui** para componentes
+- ✅ **Tailwind CSS** para estilos
+- ✅ **Autenticación** con contexto React
+- ✅ **Tipos generados** desde OpenAPI
+
+### Base de Datos
+- ✅ **PostgreSQL** con Docker
+- ✅ **Prisma ORM** con migraciones
+- ✅ **Singleton pattern** para conexiones

@@ -1,15 +1,17 @@
-import { PrismaClient } from '@prisma/client';
+import { injectable, singleton } from 'tsyringe';
 import { UserRepository } from '@users/domain/user.repository';
+import { prisma } from '@shared/database/prisma';
 
+@injectable()
+@singleton()
 export class PrismaUserRepository implements UserRepository {
-  constructor(private readonly prisma = new PrismaClient()) {}
-
   async findByEmail(email: string) {
-    return this.prisma.user.findUnique({ where: { email } });
+    return prisma.user.findUnique({ where: { email } });
   }
 
   async save(user: any) {
-    await this.prisma.user.create({ data: user });
+    const created = await prisma.user.create({ data: user });
+    return created;
   }
 }
 

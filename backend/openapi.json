@@ -50,11 +50,21 @@
                   "name": {
                     "type": "string",
                     "minLength": 1
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8
+                  },
+                  "role": {
+                    "default": "recruiter",
+                    "type": "string"
                   }
                 },
                 "required": [
                   "email",
-                  "name"
+                  "name",
+                  "password",
+                  "role"
                 ],
                 "additionalProperties": false
               }
@@ -80,17 +90,88 @@
                     "name": {
                       "type": "string",
                       "minLength": 1
+                    },
+                    "role": {
+                      "type": "string"
                     }
                   },
                   "required": [
                     "id",
                     "email",
-                    "name"
+                    "name",
+                    "role"
                   ],
                   "additionalProperties": false
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "description": "User login (JWT)",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 8
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "token"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "description": "Logout (client discards JWT)",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

@@ -6,15 +6,18 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types"],
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "paths": {
       "@shared/*": ["shared/*"],
-      "@users/*": ["users/*"]
+      "@users/*": ["users/*"],
+      "@auth/*": ["auth/*"],
+      "@candidates/*": ["candidates/*"]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "scripts/**/*.ts"],
   "exclude": ["node_modules"]
 }

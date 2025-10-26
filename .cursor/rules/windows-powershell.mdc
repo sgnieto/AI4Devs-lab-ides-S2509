@@ -1,0 +1,36 @@
+---
+alwaysApply: true
+description: "Windows/PowerShell execution rules for commands run by the agent"
+---
+# Reglas de ejecución en Windows/PowerShell
+
+Para evitar fallos en entornos Windows (PowerShell), sigue SIEMPRE estas reglas al ejecutar comandos:
+
+- No encadenes comandos con `&&`. Usa `;` o ejecútalos en pasos separados.
+- No asumas el directorio actual. Haz `cd` explícito al directorio del paquete antes de cada comando.
+- Evita prompts interactivos: añade flags `--yes`, usa variantes no interactivas o scripts npm definidos.
+- Si un comando necesita variables de entorno, establécelas con sintaxis PowerShell (por ejemplo, `$env:CI="1"`).
+- Ante rutas relativas, verifica el cwd y usa rutas completas si es necesario.
+
+## Ejemplos correctos
+
+```powershell
+# Backend
+cd backend; npm run test
+
+# Frontend (dos pasos, sin &&)
+cd frontend
+npm run build
+```
+
+## Ejemplos incorrectos (NO usar)
+
+```powershell
+cd frontend && npm run build           # '&&' no es válido en algunos shells
+npm --prefix frontend run build        # Prefijo puede fallar según shell/cwd
+```
+
+## Referencias útiles del repo
+- Scripts de backend: [backend/package.json](mdc:backend/package.json)
+- Scripts de frontend: [frontend/package.json](mdc:frontend/package.json)
+- Configuración CRACO (webpack/jest alias): [frontend/craco.config.js](mdc:frontend/craco.config.js)

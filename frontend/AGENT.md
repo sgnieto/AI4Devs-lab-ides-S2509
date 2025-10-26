@@ -16,6 +16,9 @@ Guía para agentes que trabajan en `frontend/` (React 18 + TypeScript + Tailwind
 - Tipado estricto de props/retornos; evita `any`. Usa utilidades en `src/lib` (e.g., `cn`).
 - Usa Tailwind para estilos; evita duplicaciones. Reutiliza tokens/utilidades existentes.
 - Sigue la estructura `src/components/ui` para piezas de UI (shadcn).
+- Respeta aliases de import: `@assets/*`, `@components/*`, `@hooks/*`, `@lib/*` (ver `tsconfig.json` y `craco.config.js`).
+- Define aliases para cada bounded context.
+
 
 ### shadcn/ui y bloques
 - Configuración en `components.json` (estilo `new-york`, baseColor `slate`, registries `@ss-components`, `@ss-themes`, `@ss-blocks`).
@@ -25,11 +28,21 @@ Guía para agentes que trabajan en `frontend/` (React 18 + TypeScript + Tailwind
   ```
 - Si usas el servidor shadcn/studio (MCP), respeta su workflow:
   - /cui (create-ui): primero recoger todos los bloques, instalar al final y personalizar contenido después. No saltes pasos ni mezcles herramientas.
+  - Fallback: si un bloque planificado no está en el registry, busca alternativas equivalentes dentro del MCP (misma categoría/usage) y documenta el fallback en el plan.
 
 ### Testing
 - Usa Jest + Testing Library.
 - Tests unitarios para utilidades y componentes puros; integración para interacciones.
 - Mantén los tests rápidos y deterministas.
+
+#### Utilidades de testing
+- Usa `renderWithProviders` (MemoryRouter + SessionProvider) para componentes que dependan de Router y sesión.
+- Polyfills en `src/setupTests.ts` (por ejemplo, `ResizeObserver`) para compatibilidad con Radix UI.
+
+### Tailwind v3
+- Entrada CSS: `@tailwind base; @tailwind components; @tailwind utilities;`.
+- Tokens: define variables CSS en `:root` y `.dark` antes de los `@tailwind`.
+- A11y mínimo: errores con `role="alert"` y `aria-live="assertive"`; “skip link” visible al foco.
 
 ### Comandos
 ```bash

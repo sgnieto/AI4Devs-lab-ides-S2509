@@ -4,7 +4,7 @@ Guía para agentes que implementan cambios en `backend/` (Express + TypeScript +
 
 ### Reglas clave
 - Mantén la separación de capas: `domain/` (puertos), `application/` (casos de uso, validación Zod), `infrastructure/` (adaptadores HTTP/Prisma), `shared/` (config/env, http, kernel/DI, logger).
-- Usa DI con `tsyringe` y registra implementaciones en `shared/kernel/container.ts`. Consume interfaces desde capas internas.
+- Usa DI con `tsyringe` y registra implementaciones en `shared/kernel/container.ts`. Consume interfaces desde capas internas. Anota las clases y parámetros con @injectable() y @inject según corresponda
 - No uses `console.log`; emplea `shared/kernel/logger.ts` y `pino-http` en el server.
 - Valida inputs/outputs con Zod; trata Zod como fuente de verdad del contrato.
 - Cambios mínimos y localizados; evita romper endpoints existentes.
@@ -85,6 +85,8 @@ usersRouter.post('/', async (req, res, next) => {
 - Unitarios: casos de uso con mocks de puertos.
 - Integración: adaptadores Prisma.
 - E2E: Supertest contra el `app` sin llamar `listen` cuando `NODE_ENV === 'test'`.
+- Usa `src/tests/helpers/jest-setup.ts` para preparar `reflect-metadata` y variables de entorno comunes.
+- Utiliza `src/tests/helpers/prisma-fixtures.ts` para crear/limpiar fixtures de usuarios (según rol) sin repetir código.
 
 ### Comandos
 ```bash
@@ -92,6 +94,9 @@ npm run dev
 npm run build
 npm start
 npm run test
+npm run test:unit
+npm run test:e2e
+npm run test:cov
 npm run typecheck
 npm run prisma:generate
 npm run generate:openapi
