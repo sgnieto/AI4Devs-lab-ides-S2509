@@ -4,6 +4,10 @@ export type Candidate = {
   lastName: string
   email: string
   phone?: string | null
+  address?: string | null
+  education?: string | null
+  workExperience?: string | null
+  cvPath?: string | null
   resumeUrl?: string | null
   createdAt: Date
 }
@@ -15,6 +19,8 @@ export type CandidateSearchParams = {
 
 export interface CandidateRepository {
   findMany(params: CandidateSearchParams): Promise<Candidate[]>
+  findByEmail(email: string): Promise<Candidate | undefined>
+  create(data: Omit<Candidate, 'id' | 'createdAt'>): Promise<Candidate>
 }
 
 

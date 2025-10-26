@@ -26,6 +26,7 @@ Guía para agentes que implementan cambios en `backend/` (Express + TypeScript +
      ```bash
      npm --prefix backend run generate:openapi && npm --prefix frontend run types:openapi
      ```
+  5) RBAC en rutas (OBLIGATORIO): toda ruta nueva protegida debe declarar `authenticateJwt` y `authorizeRoles(...)` con los roles permitidos explícitamente. Añade tests 401 (sin token) y 403 (rol no permitido).
 
 - Persistencia (Prisma)
   - Modifica `prisma/schema.prisma` cuando sea necesario, ejecuta migraciones y `npm run prisma:generate`.

@@ -55,7 +55,9 @@ Ejecutar: `cd frontend ; npm test`
 - ✅ **App.test.tsx**: Tests de integración de la aplicación
 - ✅ **LoginForm.test.tsx**: Tests del formulario de login
 - ✅ **RequireRole.test.tsx**: Tests de protección por roles
- - ✅ **DashboardList.test.tsx**: Verifica “Últimos 5” (nombre+apellido / email / createdAt)
+- ✅ **DashboardList.test.tsx**: Verifica “Últimos 5” (nombre+apellido / email / createdAt)
+- ✅ **CandidateForm.test.tsx**: Envío del formulario y selección de sugerencias (mocks)
+- ✅ **use-autocomplete.test.ts**: Debounce y caché del hook
 
 ## Buenas prácticas TypeScript
 
@@ -89,6 +91,7 @@ Ejecutar: `cd frontend ; npm test`
     ```bash
     npm run shadcn -- add button --registry @ss-components
     ```
+  - Nota sobre blocks: instala solo ids confirmados por el MCP. Algunos alias como `@ss-blocks/form` pueden no existir en este entorno.
 
 ## Scripts
 
@@ -118,9 +121,10 @@ npm run types:openapi
 - ✅ **Componentes shadcn/ui** para UI consistente
 - ✅ **Layout responsivo** con sidebar
 - ✅ **Formularios** con validación
+- ✅ **Formulario de “Añadir Candidato”** en `/candidates/new` (solo recruiter), con subida de CV (PDF/DOCX ≤ 5 MB) y autocompletado en educación y experiencia laboral.
 - ✅ **Tipos TypeScript** generados desde OpenAPI
 - ✅ **Tests automatizados** con Jest y Testing Library
- - ✅ **Dashboard por rol (MVP)** con KPIs y lista “Últimos 5”
+- ✅ **Dashboard por rol (MVP)** con KPIs y lista “Últimos 5”
 
 ## Tipos generados desde OpenAPI
 - Este proyecto incluye un script para generar tipos a partir de `backend/openapi.json`.

@@ -38,6 +38,19 @@ Incluye validación automática de coherencia entre plan ↔ arquitectura ↔ c�
 Salida: plan detallado, bank memory actualizada, informe KISS/DRY/YAGNI.
 La entrega final se almacenará en la carpeta .cursor/docs/{feature}, con los ficheros: plan-fullstack.md, bm-architect.md y informe-architect.md
 
+#### Protocolo de cambios Prisma (OBLIGATORIO)
+- Modificar `prisma/schema.prisma`
+- Ejecutar `npx prisma migrate dev --name <descripcion>`
+- Ejecutar `npx prisma generate`
+- Si existen claves foráneas requeridas, preparar seeds/fixtures para tests (p. ej., crear usuarios previos) o usar `upsert` en `beforeEach`.
+
+#### Matriz mínima de testing (OBLIGATORIA)
+- Unit: casos de uso críticos (creación, validaciones, conflictos) con repositorio mock.
+- Integración HTTP: 200/4xx en endpoints principales; verificar guards 401/403.
+- Upload físico (si aplica): guardar en disco según configuración; limpieza posterior.
+- Frontend hooks: debounce, caché, cancelación.
+- Frontend integración: formularios con mocks, validación y navegación.
+
 
 ### 4. `/optimizar_rendimiento [ámbito_a_optimizar]`
 Identifica y resuelve cuellos de botella técnicos o de proceso.  

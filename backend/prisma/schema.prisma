@@ -25,6 +25,7 @@ model User {
   name          String?
   passwordHash  String
   role          Role    @default(recruiter)
+  candidates    Candidate[]
 }
 
 model Candidate {
@@ -33,6 +34,12 @@ model Candidate {
   lastName   String
   email      String   @unique
   phone      String?
+  address    String?
+  education  String?
+  workExperience String?
+  cvPath     String?
   resumeUrl  String?
+  createdBy  String?
+  createdByUser User? @relation(fields: [createdBy], references: [id], onDelete: SetNull)
   createdAt  DateTime @default(now())
 }

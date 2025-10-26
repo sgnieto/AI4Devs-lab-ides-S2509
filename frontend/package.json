@@ -32,9 +32,9 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-      "test:jest": "jest --config jest.config.js",
-      "test": "craco test",
-      "test:cov": "jest --config jest.config.js --coverage",
+    "test:jest": "jest --config jest.config.js",
+    "test": "craco test",
+    "test:cov": "jest --config jest.config.js --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "eslint --ext .ts,.tsx src --fix",

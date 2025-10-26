@@ -95,10 +95,62 @@ export type paths = {
                 /** Format: email */
                 email: string;
                 phone?: string | null;
-                resumeUrl?: string | null;
+                address?: string | null;
+                education?: string | null;
+                workExperience?: string | null;
+                cvPath?: string | null;
                 createdAt: string;
               })[];
           };
+        };
+      };
+    };
+    /** @description Crear candidato */
+    post: {
+      requestBody?: {
+        content: {
+          "application/json": {
+            firstName: string;
+            lastName: string;
+            /** Format: email */
+            email: string;
+            phone?: string | null;
+            address?: string | null;
+            education?: string | null;
+            workExperience?: string | null;
+            cvPath?: string | null;
+          };
+        };
+      };
+      responses: {
+        /** @description Success */
+        201: {
+          content: {
+            "application/json": {
+              id: string;
+              firstName: string;
+              lastName: string;
+              /** Format: email */
+              email: string;
+              phone?: string | null;
+              address?: string | null;
+              education?: string | null;
+              workExperience?: string | null;
+              cvPath?: string | null;
+              createdAt: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  "/candidates/suggest": {
+    /** @description Sugerencias para autocompletado de educación y experiencia */
+    get: {
+      responses: {
+        /** @description OK */
+        200: {
+          content: never;
         };
       };
     };

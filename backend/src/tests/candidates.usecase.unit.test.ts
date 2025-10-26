@@ -11,6 +11,14 @@ class InMemoryRepo implements CandidateRepository {
     })
     return sorted.slice(0, Math.max(1, Math.min(50, params.limit ?? 5)))
   }
+  async findByEmail(email: string) {
+    return this.data.find(item => item.email === email)
+  }
+  async create(data: any) {
+    const newItem = { id: Date.now().toString(), ...data, createdAt: new Date() }
+    this.data.push(newItem)
+    return newItem
+  }
 }
 
 describe('CandidateSearchUseCase', () => {

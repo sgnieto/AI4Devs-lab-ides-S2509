@@ -2,11 +2,12 @@ import React from 'react';
 import './App.css';
 import { Button } from '@components/ui/button';
 import { SessionProvider, useSession } from '@session/SessionContext';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import Login from '@components/shadcn-studio/blocks/login-page-01/login-page-01';
 import AppShell from '@components/layout/AppShell';
 import { RequireAuth, RequireRole } from '@components/RequireAuth';
 import { fetchCandidates, type Candidate } from '@lib/api';
+import CandidateForm from '@components/shadcn-studio/CandidateForm';
 import { Skeleton } from '@components/ui/skeleton';
 import { Card } from '@components/ui/card';
 import StatisticsCard from '@components/shadcn-studio/blocks/statistics-card-01';
@@ -70,8 +71,13 @@ function Protected() {
             <StatisticsCard icon={<TrendingUp size={16} />} value={String(candidates?.length || 0)} title="Recientes" changePercentage="0%" />
           </RequireRole>
           <RequireRole roles={['hr_ops']}>
-            <StatisticsCard icon={<TrendingUp size={16} />} value={String(candidates?.filter(c => c.phone || c.resumeUrl).length || 0)} title="Calidad de datos (muestra)" changePercentage="0%" />
+            <StatisticsCard icon={<TrendingUp size={16} />} value={String(candidates?.filter(c => c.phone || (c as any).cvPath).length || 0)} title="Calidad de datos (muestra)" changePercentage="0%" />
           </RequireRole>
+      <RequireRole roles={[ 'recruiter' ]}>
+        <div className="mt-6">
+          <Link to="/candidates/new" className="inline-flex"><Button>Añadir candidato</Button></Link>
+        </div>
+      </RequireRole>
         </div>
       )}
 
@@ -114,6 +120,13 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={session.token ? <Protected /> : <Navigate to="/login" replace />} />
+        <Route path="/candidates/new" element={session.token ? (
+          <RequireRole roles={['recruiter']}>
+            <AppShell>
+              <CandidateForm />
+            </AppShell>
+          </RequireRole>
+        ) : <Navigate to="/login" replace />} />
         <Route path="*" element={<Navigate to={session.token ? '/dashboard' : '/login'} replace />} />
       </Routes>
     </BrowserRouter>

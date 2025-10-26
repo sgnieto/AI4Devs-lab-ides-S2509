@@ -56,10 +56,20 @@ Genera prompts MCP de Shadcn Studio para crear, refinar o inspirar interfaces.
 #### Notas MCP (shadcn/studio)
 - Sigue estrictamente el workflow del MCP (/cui: collect first, install last; personaliza contenido después).
 - Si un bloque planificado no está disponible en el registry, busca alternativas equivalentes (misma categoría/uso) dentro del MCP y documenta el fallback en el plan.
+- Validación de registry (OBLIGATORIO): nunca asumas IDs de bloques. Usa `get-blocks-metadata` + `get-block-meta-content` para resolverlos. Si un bloque no existe en el registry activo, aplica fallback con componentes locales (por ejemplo, `ui/input`, `ui/label`, `ui/button`, `ui/card`) sin detener el flujo, y documenta el fallback en los entregables.
+
+#### Accesibilidad (combobox)
+- Checklist ARIA para combobox: roles `combobox` + `listbox` + `option`, navegación por teclado (↑/↓, Enter, Esc), anuncio de conteo en `aria-live`, y foco visible.
+- Bloquear el envío si existen errores de validación visibles o campos requeridos vacíos. Mensajes inline asociados con `aria-describedby`.
 
 ### /valida_y_entrega
 Verifica coherencia UX/UI y entrega informe final con prompts y decisiones documentadas. Integra las modificaciones necesarias en los prompts derivadas de la validación de coherencia, accesibilidad y objetivos cumplidos.
 La entrega final se almacenará en la carpeta .cursor/docs/{feature}, con los ficheros: prompts-shadcn.md, informe-ux.md
+
+#### Entregables (ampliación)
+- Incluir en `informe-ux.md` una sección “Reglas de instalación MCP y fallback”, detallando:
+  - Cómo se validaron los IDs de bloques.
+  - Qué bloques no estuvieron disponibles y qué fallback se aplicó (componentes locales) sin alterar el flujo.
 
 ### /uxui_pipeline
 Ejecuta el proceso completo (1, 2, 4, 6, 5, 7, 8) desde la épica/historia hasta la entrega UX final.

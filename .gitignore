@@ -25,5 +25,7 @@ yarn-error.log*
 .idea
 .vscode
 
+# cvstorage
+backend/cvs_storage
 # .env
 

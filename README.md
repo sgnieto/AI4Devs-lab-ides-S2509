@@ -67,7 +67,7 @@ cd backend
 npm install
 cp .env.example .env  # Configura las variables de entorno
 npm run prisma:generate
-npm run prisma:migrate
+npx prisma migrate dev --name init
 ```
 
 4. **Configura el frontend**
@@ -104,6 +104,29 @@ npm test
 # Frontend tests  
 cd frontend
 npm test
+```
+
+### 🔐 Roles y RBAC
+- `recruiter`: puede crear candidatos.
+- `hiring_manager`, `hr_ops`: no pueden crear (403) según MVP actual.
+
+### 📄 Endpoints relevantes (MVP Candidatos)
+- `GET /candidates/` (autenticado): lista recientes (`limit`, `sort`).
+- `POST /candidates` (rol recruiter): `multipart/form-data` con campos y `cv` (PDF/DOCX ≤ 5 MB). Guarda en `FILE_STORAGE_BASE_PATH/candidates/...` y devuelve `cvPath`.
+- `GET /candidates/suggest?field=educacion|experienciaLaboral&q=texto&limit=10` (rol recruiter): autocompletado.
+
+### ⚙️ Variables de entorno clave
+- `JWT_SECRET`, `JWT_EXPIRES_MINUTES`
+- `FILE_STORAGE_BASE_PATH` (por defecto `storage`)
+- `TRUST_PROXY=true` (si está detrás de proxy)
+
+### 🔗 OpenAPI y tipos FE
+```powershell
+cd backend
+npm run generate:openapi
+cd ..
+cd frontend
+npm run types:openapi
 ```
 
 ### 🧭 Flujo Dashboard (MVP)

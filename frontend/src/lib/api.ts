@@ -71,6 +71,10 @@ export type Candidate = {
   lastName: string
   email: string
   phone?: string | null
+  address?: string | null
+  education?: string | null
+  workExperience?: string | null
+  cvPath?: string | null
   resumeUrl?: string | null
   createdAt: string
 }
@@ -81,6 +85,30 @@ export async function fetchCandidates(params?: { limit?: number; sort?: 'created
   if (params?.sort) qp.set('sort', params.sort)
   const url = `/candidates${qp.toString() ? `?${qp.toString()}` : ''}`
   return apiFetch<Candidate[]>(url)
+}
+
+// Candidates - Create (multipart/form-data)
+export async function createCandidateRequest(form: FormData): Promise<Candidate> {
+  const headers: Record<string, string> = {}
+  const token = getSessionToken?.()
+  if (token) headers['Authorization'] = `Bearer ${token}`
+  const res = await fetch('/candidates/', { method: 'POST', headers, body: form })
+  if (!res.ok) {
+    let msg = `${res.status}`
+    try { msg = (await res.json())?.message || msg } catch {
+      // Ignore JSON parsing errors, use default message
+    }
+    throw new Error(msg)
+  }
+  return (await res.json()) as Candidate
+}
+
+// Autocomplete suggestions
+export type SuggestItem = { value: string; label: string; occurrences: number }
+export async function fetchSuggestions(field: 'educacion'|'experienciaLaboral', q: string, limit = 10): Promise<SuggestItem[]> {
+  const qp = new URLSearchParams({ field, q, limit: String(limit) })
+  const url = `/candidates/suggest?${qp.toString()}`
+  return (await apiFetch<{ items: SuggestItem[] }>(url)).items
 }
 
 

@@ -28,7 +28,7 @@ Guía para agentes que trabajan en `frontend/` (React 18 + TypeScript + Tailwind
   ```
 - Si usas el servidor shadcn/studio (MCP), respeta su workflow:
   - /cui (create-ui): primero recoger todos los bloques, instalar al final y personalizar contenido después. No saltes pasos ni mezcles herramientas.
-  - Fallback: si un bloque planificado no está en el registry, busca alternativas equivalentes dentro del MCP (misma categoría/usage) y documenta el fallback en el plan.
+  - Fallback/Política de bloques: usa solo IDs confirmados por MCP (vía `get-blocks-metadata` + `get-block-meta-content`). Si un bloque no existe, utiliza componentes locales ya presentes (`ui/input`, `ui/label`, `ui/button`, `ui/card`, `ui/toast`, etc.) y documenta el fallback.
 
 ### Testing
 - Usa Jest + Testing Library.
@@ -96,5 +96,10 @@ npm run types:openapi
 - Añadir componente UI: instalar con shadcn → crear archivo en `components/ui` → tipar props → añadir tests.
 - Añadir lógica de estado: crear hook en `src/hooks` → consumir desde componentes de presentación.
 - Corrección de bug: reproducir con test → aplicar el cambio mínimo → asegurar que los renders y estilos no colaterales siguen intactos.
+
+### Subidas de archivos en FE (upload)
+- Validar mimetype y tamaño en el cliente antes de enviar (PDF/DOCX, ≤ 5 MB).
+- Usar `FormData` para `multipart/form-data` y añadir únicamente campos no vacíos.
+- Mostrar mensajes accesibles (`role="alert"`, `aria-live="assertive"`) cuando el archivo sea inválido.
 
 

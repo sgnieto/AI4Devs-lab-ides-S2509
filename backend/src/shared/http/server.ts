@@ -7,9 +7,13 @@ import { usersRouter } from '@users/infrastructure/http/users.router';
 import { authRouter } from '@auth/infrastructure/http/auth.router';
 import { candidatesRouter } from '@candidates/infrastructure/http/candidates.router';
 import { registerRouter } from './route-registry';
+import { env } from '@shared/config/env';
 
 export function createHttpServer() {
   const app = express();
+
+  // Configurar trust proxy para manejar headers X-Forwarded-For
+  app.set('trust proxy', env.TRUST_PROXY);
 
   app.use(express.json());
   app.use(httpLogger);

@@ -14,7 +14,10 @@ export const CandidateSearchOutput = z.array(
     lastName: z.string(),
     email: z.string().email(),
     phone: z.string().optional().nullable(),
-    resumeUrl: z.string().url().optional().nullable(),
+    address: z.string().optional().nullable(),
+    education: z.string().optional().nullable(),
+    workExperience: z.string().optional().nullable(),
+    cvPath: z.string().optional().nullable(),
     createdAt: z.date(),
   })
 )

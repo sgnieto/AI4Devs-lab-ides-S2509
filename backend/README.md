@@ -127,6 +127,12 @@ Variables de entorno (`backend/.env`):
 NODE_ENV=development
 PORT=3010
 DATABASE_URL=postgresql://user:pass@localhost:5432/dbname?schema=public
+JWT_SECRET=dev-secret
+JWT_EXPIRES_MINUTES=15
+RATE_LIMIT_WINDOW_MS=60000
+RATE_LIMIT_MAX=60
+FILE_STORAGE_BASE_PATH=storage
+TRUST_PROXY=true
 ```
 
 Instalación:
@@ -192,7 +198,11 @@ Docker/PostgreSQL (opcional): usar `docker-compose.yml` en la raíz para levanta
 
 ### Candidatos (Protegido)
 - `GET /candidates/` → Listar candidatos recientes (requiere autenticación). Query params: `limit`, `sort=createdAt|-createdAt`.
-- `POST /candidates` → Crear candidato (requiere rol específico)
+- `POST /candidates` → Crear candidato. Requiere `role=recruiter`.
+  - Content-Type: `multipart/form-data`
+  - Campos: `firstName`, `lastName`, `email`, `phone?`, `address?`, `educacion?`, `experienciaLaboral?`, `cv?`
+  - `cv` (opcional): PDF o DOCX, ≤ 5 MB. Se almacena en disco bajo `FILE_STORAGE_BASE_PATH/candidates/YYYY-MM-DD/` con nombre normalizado. La respuesta incluye `cvPath` si se adjuntó.
+- `GET /candidates/suggest?field=educacion|experienciaLaboral&q=texto&limit=10` → Sugerencias para autocompletar (requiere `role=recruiter`).
 
 ### Health
 - `GET /` → Health básico: "Hola LTI!"
@@ -212,7 +222,13 @@ npm run generate:openapi
 ```
 
 ## Estrategia de testing (resumen MVP)
-- Unit: `CandidateSearchUseCase` (limit/sort) con repo en memoria.
-- Integración: `GET /candidates/` 401/200 con Supertest.
-- E2E: flujo login → listado (opcional).
+- Unit: `CreateCandidateUseCase` (creación, conflicto por email) con repositorio mock. `CandidateSearchUseCase` (limit/sort) con repo en memoria.
+- Integración HTTP: `GET /candidates/` 401/200; `POST /candidates` 400/403/201 con `multipart/form-data`; `GET /candidates/suggest` 400/200.
+- Upload: test de integración verifica que `cvPath` existe en disco bajo `FILE_STORAGE_BASE_PATH`.
+  
+Ejecutar tests:
+```powershell
+cd backend
+npm test
+```
 Si necesitas ampliar la documentación (CI/CD, migraciones Prisma, políticas de errores), añade secciones según crezca el dominio.
