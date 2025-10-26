@@ -55,6 +55,7 @@ Ejecutar: `cd frontend ; npm test`
 - ✅ **App.test.tsx**: Tests de integración de la aplicación
 - ✅ **LoginForm.test.tsx**: Tests del formulario de login
 - ✅ **RequireRole.test.tsx**: Tests de protección por roles
+ - ✅ **DashboardList.test.tsx**: Verifica “Últimos 5” (nombre+apellido / email / createdAt)
 
 ## Buenas prácticas TypeScript
 
@@ -119,6 +120,7 @@ npm run types:openapi
 - ✅ **Formularios** con validación
 - ✅ **Tipos TypeScript** generados desde OpenAPI
 - ✅ **Tests automatizados** con Jest y Testing Library
+ - ✅ **Dashboard por rol (MVP)** con KPIs y lista “Últimos 5”
 
 ## Tipos generados desde OpenAPI
 - Este proyecto incluye un script para generar tipos a partir de `backend/openapi.json`.

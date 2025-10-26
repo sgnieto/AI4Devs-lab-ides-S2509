@@ -1,0 +1,2 @@
+Ahora quiero que analices de manera autocrítica toda la interacción que hemos tenido en el chat, evalúes posibles mejoras a implementar en la iteración. Analiza después los agentes architect-fullstack y uiux-agent, así como los ficheros AGENT.md de los proyecto, para ver qué mejoras se pueden introducir para facilitar la iteración entre los dos. Propón las mejoras con las modificaciones a realizar, pero no las apliques, es necesario que yo las analice primero.
+Piensa paso a paso

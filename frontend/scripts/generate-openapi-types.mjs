@@ -1,16 +1,15 @@
 import { mkdirSync, writeFileSync, readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
-import openapiTS, { astToString, COMMENT_HEADER } from 'openapi-typescript';
+import openapiTS from 'openapi-typescript';
 
 async function main() {
   const input = resolve(process.cwd(), '../backend/openapi.json');
   const output = resolve(process.cwd(), 'src/types/openapi.ts');
   const raw = readFileSync(input, 'utf-8');
   const schema = JSON.parse(raw);
-  const nodes = await openapiTS(schema, { exportType: true });
-  const text = `${COMMENT_HEADER}${astToString(nodes)}`;
+  const types = await openapiTS(schema, { exportType: true });
   mkdirSync(dirname(output), { recursive: true });
-  writeFileSync(output, text);
+  writeFileSync(output, types);
   // eslint-disable-next-line no-console
   console.log(`Generated ${output}`);
 }

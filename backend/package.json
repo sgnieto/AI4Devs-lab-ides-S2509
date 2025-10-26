@@ -16,7 +16,8 @@
         "prisma:init": "npx prisma init",
         "prisma:generate": "npx prisma generate",
         "start:prod": "npm run build && npm start",
-        "users": "ts-node -r tsconfig-paths/register -r dotenv/config scripts/users.ts"
+        "users": "ts-node -r tsconfig-paths/register -r dotenv/config scripts/users.ts",
+        "seed:candidates": "ts-node -r tsconfig-paths/register -r dotenv/config scripts/candidates.seed.ts"
     },
     "keywords": [],
     "author": "",

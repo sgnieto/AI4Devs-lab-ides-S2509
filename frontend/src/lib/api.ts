@@ -64,4 +64,23 @@ export async function createUserRequest(input: CreateUserRequestBody): Promise<C
   return apiFetch<CreateUserResponseBody, CreateUserRequestBody>('/users/', { method: 'POST', body: input })
 }
 
+// Candidates - List
+export type Candidate = {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  phone?: string | null
+  resumeUrl?: string | null
+  createdAt: string
+}
+
+export async function fetchCandidates(params?: { limit?: number; sort?: 'createdAt' | '-createdAt' }): Promise<Candidate[]> {
+  const qp = new URLSearchParams()
+  if (params?.limit) qp.set('limit', String(params.limit))
+  if (params?.sort) qp.set('sort', params.sort)
+  const url = `/candidates${qp.toString() ? `?${qp.toString()}` : ''}`
+  return apiFetch<Candidate[]>(url)
+}
+
 

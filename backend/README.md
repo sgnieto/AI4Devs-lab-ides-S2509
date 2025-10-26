@@ -43,8 +43,18 @@ backend/
         prisma-user.repository.ts  # Adaptador Prisma
         http/
           users.router.ts    # Adaptador HTTP (Express Router)
+    candidates/
+      domain/
+        candidate.repository.ts
+      application/
+        search-candidates.usecase.ts
+      infrastructure/
+        prisma-candidate.repository.ts
+        http/
+          candidates.router.ts
   scripts/
     generate-openapi.ts      # Generación de openapi.json (si se utiliza)
+    candidates.seed.ts       # Seed de candidatos para desarrollo
   tsconfig.json
   package.json
 ```
@@ -181,7 +191,7 @@ Docker/PostgreSQL (opcional): usar `docker-compose.yml` en la raíz para levanta
 - `POST /users` → Crear usuario (usa caso de uso + repo Prisma)
 
 ### Candidatos (Protegido)
-- `GET /candidates` → Listar candidatos (requiere autenticación)
+- `GET /candidates/` → Listar candidatos recientes (requiere autenticación). Query params: `limit`, `sort=createdAt|-createdAt`.
 - `POST /candidates` → Crear candidato (requiere rol específico)
 
 ### Health
@@ -192,4 +202,17 @@ Docker/PostgreSQL (opcional): usar `docker-compose.yml` en la raíz para levanta
 
 ---
 
+## Scripts útiles (PowerShell)
+```powershell
+cd backend
+npx prisma migrate dev --name add_candidates --skip-generate --schema prisma/schema.prisma
+npx prisma generate --schema prisma/schema.prisma
+npm run seed:candidates
+npm run generate:openapi
+```
+
+## Estrategia de testing (resumen MVP)
+- Unit: `CandidateSearchUseCase` (limit/sort) con repo en memoria.
+- Integración: `GET /candidates/` 401/200 con Supertest.
+- E2E: flujo login → listado (opcional).
 Si necesitas ampliar la documentación (CI/CD, migraciones Prisma, políticas de errores), añade secciones según crezca el dominio.

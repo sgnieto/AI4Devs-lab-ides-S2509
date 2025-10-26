@@ -3,154 +3,126 @@
  * Do not make direct changes to the file.
  */
 
+
 export type paths = {
-    "/users/": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** @description Create a new user */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** Format: email */
-                        email: string;
-                        name: string;
-                        password: string;
-                        /** @default recruiter */
-                        role: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Success */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            id: string;
-                            /** Format: email */
-                            email: string;
-                            name: string;
-                            role: string;
-                        };
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** @description User login (JWT) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** Format: email */
-                        email: string;
-                        password: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Success */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            token: string;
-                        };
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** @description Logout (client discards JWT) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-};
-export type webhooks = Record<string, never>;
-export type components = {
-    schemas: {
-        Example: {
-            id: string;
+  "/users/": {
+    /** @description Create a new user */
+    post: {
+      requestBody?: {
+        content: {
+          "application/json": {
+            /** Format: email */
+            email: string;
             name: string;
+            password: string;
+            /** @default recruiter */
+            role: string;
+          };
         };
+      };
+      responses: {
+        /** @description Success */
+        201: {
+          content: {
+            "application/json": {
+              id: string;
+              /** Format: email */
+              email: string;
+              name: string;
+              role: string;
+            };
+          };
+        };
+      };
     };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+  };
+  "/auth/login": {
+    /** @description User login (JWT) */
+    post: {
+      requestBody?: {
+        content: {
+          "application/json": {
+            /** Format: email */
+            email: string;
+            password: string;
+          };
+        };
+      };
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "application/json": {
+              token: string;
+            };
+          };
+        };
+      };
+    };
+  };
+  "/auth/logout": {
+    /** @description Logout (client discards JWT) */
+    post: {
+      responses: {
+        /** @description OK */
+        200: {
+          content: never;
+        };
+      };
+    };
+  };
+  "/candidates/stats": {
+    get: {
+      responses: {
+        /** @description OK */
+        200: {
+          content: never;
+        };
+      };
+    };
+  };
+  "/candidates/": {
+    /** @description Listar candidatos recientes */
+    get: {
+      responses: {
+        /** @description Success */
+        200: {
+          content: {
+            "application/json": ({
+                id: string;
+                firstName: string;
+                lastName: string;
+                /** Format: email */
+                email: string;
+                phone?: string | null;
+                resumeUrl?: string | null;
+                createdAt: string;
+              })[];
+          };
+        };
+      };
+    };
+  };
 };
+
+export type webhooks = Record<string, never>;
+
+export type components = {
+  schemas: {
+    Example: {
+      id: string;
+      name: string;
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
+};
+
 export type $defs = Record<string, never>;
+
+export type external = Record<string, never>;
+
 export type operations = Record<string, never>;

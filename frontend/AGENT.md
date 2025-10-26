@@ -73,6 +73,15 @@ npm run types:openapi
   type CreateUserBody = paths['/users/']['post']['requestBody']['content']['application/json'];
   ```
 
+### Orden de integración (contratos → UI)
+1) Genera OpenAPI en backend y los tipos en frontend antes de tocar `src/lib/api.ts`.
+2) Implementa o ajusta funciones de cliente (`apiFetch`, `fetchCandidates`, etc.).
+3) Integra en UI con estados `loading/empty/error` y accesibilidad básica.
+
+### Accesibilidad de listas y estados
+- Listas: usa `ul/li` y `time` con `dateTime` para fechas; copia accesible en estados vacíos y errores (`aria-live`).
+- Evita `role="list"` innecesario cuando usas `ul`/`li` semánticos.
+
 ### Buenas prácticas TypeScript/React
 - Props pequeñas y semánticas; usa discriminated unions cuando aplique.
 - Evita efectos secundarios en render; usa hooks adecuados.

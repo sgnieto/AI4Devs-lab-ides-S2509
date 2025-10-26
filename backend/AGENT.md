@@ -102,6 +102,32 @@ npm run prisma:generate
 npm run generate:openapi
 ```
 
+### Convenciones y Windows/PowerShell
+- Rutas HTTP: estandariza paths sin slash final (e.g., `/candidates`), pero los routers deben tolerar ambos (`/candidates/`).
+- PowerShell: evita `&&`. Ejecuta `cd` y el comando en pasos separados.
+
+### Seeds y datos de desarrollo
+- Script de seed de candidatos (solo desarrollo):
+```powershell
+cd backend
+npx prisma migrate dev --name add_candidates --skip-generate --schema prisma/schema.prisma
+npx prisma generate --schema prisma/schema.prisma
+npm run seed:candidates
+```
+
+### Pipeline de contratos (OpenAPI → Frontend)
+1) Generar OpenAPI en backend:
+```powershell
+cd backend
+npm run generate:openapi
+```
+2) Generar tipos en frontend:
+```powershell
+cd ..
+cd frontend
+npm run types:openapi
+```
+
 ### Buenas prácticas TypeScript
 - Tipado explícito en APIs públicas y DTOs; evita `any`.
 - Early returns; evita anidaciones profundas y `try/catch` innecesarios.

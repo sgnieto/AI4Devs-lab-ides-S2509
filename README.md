@@ -9,6 +9,7 @@ Monorepo full‑stack con frontend React y backend Express/TypeScript. El backen
 ✅ **Base de datos PostgreSQL** con Prisma ORM  
 ✅ **Tests automatizados** con Jest y Supertest  
 ✅ **Documentación OpenAPI** generada automáticamente
+✅ **Módulo de Candidatos (MVP)** con listado protegido y dashboard por rol
 
 ## Explicación de Directorios y Archivos
 
@@ -103,6 +104,30 @@ npm test
 # Frontend tests  
 cd frontend
 npm test
+```
+
+### 🧭 Flujo Dashboard (MVP)
+- Rutas protegidas tras login.
+- Dashboard muestra email/rol y widgets por rol.
+- “Últimos 5 candidatos”: nombre+apellido / email / createdAt.
+
+### 🗄️ Base de datos y seeds (Candidatos)
+- Prisma incluye el modelo `Candidate` (MVP) con migración.
+- Seed de desarrollo:
+```powershell
+cd backend
+npx prisma migrate dev --name add_candidates --skip-generate --schema prisma/schema.prisma
+npx prisma generate --schema prisma/schema.prisma
+npm run seed:candidates
+```
+
+### 🔗 OpenAPI y Tipos Frontend
+```powershell
+cd backend
+npm run generate:openapi
+cd ..
+cd frontend
+npm run types:openapi
 ```
 
 ## Docker y PostgreSQL
